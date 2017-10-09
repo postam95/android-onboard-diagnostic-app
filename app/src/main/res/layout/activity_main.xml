@@ -4,15 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hu.unideb.inf.obdbypm.MainActivity">
+    tools:context="hu.unideb.inf.obdbypm.MainActivity"
+    android:background="@android:color/darker_gray">
+
+    <Button
+        android:id="@+id/btnNavigateToLiveData"
+        android:layout_width="138dp"
+        android:layout_height="74dp"
+        android:background="@android:color/white"
+        android:text="Live data"
+        android:onClick="onClickNavigateToLiveDataBtn"
+        android:layout_marginLeft="35dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp" />
+
+    <Button
+        android:id="@+id/btnNavigateToFaultCodes"
+        android:layout_width="138dp"
+        android:layout_height="74dp"
+        android:background="@android:color/white"
+        android:text="Fault codes"
+        android:onClick="onClickNavigateToFaultCodesBtn"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp" />
+
+    <Button
+        android:id="@+id/btnNavigateToLongTermData"
+        android:layout_width="138dp"
+        android:layout_height="74dp"
+        android:background="@android:color/white"
+        android:text="Long term data"
+        android:onClick="onClickNavigateToLongTermDataBtn"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="105dp" />
+
+    <Button
+        android:id="@+id/btnNavigateToLServiceBook"
+        android:layout_width="138dp"
+        android:layout_height="74dp"
+        android:background="@android:color/white"
+        android:text="Service book"
+        android:onClick="onClickNavigateToServiceBookBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="105dp" />
+
+    <Button
+        android:id="@+id/btnNavigateToBluetoothChoose"
+        android:layout_width="138dp"
+        android:layout_height="74dp"
+        android:background="@android:color/white"
+        android:text="Bluetooth"
+        android:onClick="onClickNavigateToBluetoothChooseBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="195dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/editText"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:ems="10"
+        android:text="Welcome to the OBDII by PM Application!"
+        android:textAlignment="center"
+        android:inputType="textMultiLine"
+        android:textSize="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
