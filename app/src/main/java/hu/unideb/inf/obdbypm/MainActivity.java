@@ -16,6 +16,7 @@ import java.util.Set;
 import hu.unideb.inf.obdbypm.activities.FaultCodesActivity;
 import hu.unideb.inf.obdbypm.activities.LiveDataActivity;
 import hu.unideb.inf.obdbypm.activities.LongTermDataActivity;
+import hu.unideb.inf.obdbypm.activities.RegistrationActivity;
 import hu.unideb.inf.obdbypm.activities.ServiceBookActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
     public void onClickNavigateToServiceBookBtn(View v)
     {
         Intent intent = new Intent(this, ServiceBookActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickNavigateToRegistrationBtn(View v)
+    {
+        Intent intent = new Intent(this, RegistrationActivity.class);
         startActivity(intent);
     }
 
