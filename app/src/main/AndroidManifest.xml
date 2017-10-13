@@ -24,17 +24,20 @@
             android:name=".activities.LiveDataActivity"
             android:label="Live data" />
         <activity
-            android:name=".activities.ServiceBookActivity"
-            android:label="Service book" />
-        <activity
-            android:name=".activities.LongTermDataActivity"
-            android:label="Long term data" />
-        <activity
             android:name=".activities.FaultCodesActivity"
             android:label="Fault codes" />
         <activity
             android:name=".activities.RegistrationActivity"
             android:label="Registration" />
+        <activity
+            android:name=".activities.HeadupDisplayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Head-up Display"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".activities.ServiceBookActivity"
+            android:label="Service book"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

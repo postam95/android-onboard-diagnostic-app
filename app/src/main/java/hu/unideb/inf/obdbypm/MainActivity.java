@@ -15,7 +15,7 @@ import java.util.Set;
 
 import hu.unideb.inf.obdbypm.activities.FaultCodesActivity;
 import hu.unideb.inf.obdbypm.activities.LiveDataActivity;
-import hu.unideb.inf.obdbypm.activities.LongTermDataActivity;
+import hu.unideb.inf.obdbypm.activities.HeadupDisplayActivity;
 import hu.unideb.inf.obdbypm.activities.RegistrationActivity;
 import hu.unideb.inf.obdbypm.activities.ServiceBookActivity;
 
@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onClickNavigateToLongTermDataBtn(View v)
+    public void onClickNavigateToHeadupDisplayBtn(View v)
     {
-        Intent intent = new Intent(this, LongTermDataActivity.class);
+        Intent intent = new Intent(this, HeadupDisplayActivity.class);
         startActivity(intent);
     }
 
