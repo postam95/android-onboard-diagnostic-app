@@ -2,23 +2,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="@color/black_overlay"
     tools:context="hu.unideb.inf.obdbypm.activities.HeadupDisplayActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
+
+<RelativeLayout
+    android:id="@+id/containerHUD"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
-        android:id="@+id/fullscreen_content"
+        android:id="@+id/oilTemp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="right|center_vertical"
         android:keepScreenOn="true"
-        android:text="@string/dummy_content"
+        android:text="56°C oil"
+        android:textColor="#33b5e5"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/dateAndTime"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|center_horizontal"
+        android:keepScreenOn="true"
+        android:text="2017.10.15. 10.00"
+        android:textColor="#33b5e5"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/speed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|center_horizontal"
+        android:keepScreenOn="true"
+        android:text="50 km/h"
         android:textColor="#33b5e5"
         android:textSize="50sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/revCounter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|center_horizontal"
+        android:keepScreenOn="true"
+        android:text="5000 r.p.m."
+        android:textColor="#33b5e5"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/fuelLevel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="left|center_vertical"
+        android:keepScreenOn="true"
+        android:text="56% fuel"
+        android:textColor="#33b5e5"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+</RelativeLayout>
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout
@@ -42,7 +91,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/dummy_button" />
+                android:text="" />
 
         </LinearLayout>
     </FrameLayout>

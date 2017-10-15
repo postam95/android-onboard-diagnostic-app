@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">OBDbyPM</string>
-
+    <string name="add_cat">Add a car</string>
+    <string name="add">Add items</string>
+    <string name="add_kit">Add a service book record</string>
+    <string name="cat">Car name</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="kitten">Service book record name</string>
     <string name="title_activity_headup_display">HeadupDisplayActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="dummy_button">HUD Button</string>
+    <string name="dummy_content">HUD\nCONTENT</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

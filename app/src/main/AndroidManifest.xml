@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,22 +24,26 @@
         </activity>
         <activity
             android:name=".activities.LiveDataActivity"
-            android:label="Live data" />
+            android:label="Live data"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.FaultCodesActivity"
-            android:label="Fault codes" />
+            android:label="Fault codes"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.RegistrationActivity"
-            android:label="Registration" />
+            android:name=".activities.ServiceBookActivity"
+            android:label="Service Book"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.HeadupDisplayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Head-up Display"
-            android:theme="@style/FullscreenTheme" />
+            android:theme="@style/FullscreenTheme"
+            android:screenOrientation="reverseLandscape"/>
         <activity
-            android:name=".activities.ServiceBookActivity"
-            android:label="Service book"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activities.AddingActivity"
+            android:label="Add"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
