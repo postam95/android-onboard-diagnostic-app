@@ -22,6 +22,9 @@ public class Car {
     @ForeignCollectionField
     private ForeignCollection<ServiceBookRecord> serviceBookRecords;
 
+    @DatabaseField(foreign=true, foreignAutoRefresh=true)
+    private Person person;
+
     public int getId() {
         return id;
     }
@@ -48,6 +51,14 @@ public class Car {
 
     public void setServiceBook(ForeignCollection<ServiceBookRecord> serviceBookRecords) {
         this.serviceBookRecords = serviceBookRecords;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     @Override

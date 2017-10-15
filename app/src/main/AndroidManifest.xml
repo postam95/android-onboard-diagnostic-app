@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,25 +26,30 @@
         <activity
             android:name=".activities.LiveDataActivity"
             android:label="Live data"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.FaultCodesActivity"
             android:label="Fault codes"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ServiceBookActivity"
             android:label="Service Book"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RegistrationActivity"
+            android:label="Registration"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HeadupDisplayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Head-up Display"
-            android:theme="@style/FullscreenTheme"
-            android:screenOrientation="reverseLandscape"/>
+            android:label="Head-Up Display"
+            android:screenOrientation="reverseLandscape"
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".activities.AddingActivity"
-            android:label="Add"
+            android:label="Adding to the service book"
             android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

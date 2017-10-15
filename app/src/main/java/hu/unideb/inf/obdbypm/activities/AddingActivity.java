@@ -16,6 +16,7 @@ import hu.unideb.inf.obdbypm.R;
 import hu.unideb.inf.obdbypm.database.DatabaseManager;
 import hu.unideb.inf.obdbypm.models.Car;
 import hu.unideb.inf.obdbypm.models.ServiceBookRecord;
+import hu.unideb.inf.obdbypm.statics.Common;
 
 public class AddingActivity extends AppCompatActivity {
 
@@ -64,6 +65,7 @@ public class AddingActivity extends AppCompatActivity {
                     } else {
                         Car car = new Car();
                         car.setName(editCar.getText().toString().trim());
+                        car.setPerson(Common.CommonInformations.userLoggedIn);
 
                         //save new object to db
                         DatabaseManager.getInstance().addCar(car);
@@ -74,8 +76,10 @@ public class AddingActivity extends AppCompatActivity {
                     } else {
                         ServiceBookRecord serviceBookRecord = new ServiceBookRecord();
                         Car car = (Car) spinner.getSelectedItem();
+                        car.setPerson(Common.CommonInformations.userLoggedIn);
                         serviceBookRecord.setName(editServiceBookRecord.getText().toString().trim());
                         serviceBookRecord.setCar(car);
+
 
                         //save to database
                         DatabaseManager.getInstance().newServiceBookRecordAppend(serviceBookRecord);
@@ -115,8 +119,12 @@ public class AddingActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "None car in DB, please add car first", Toast.LENGTH_SHORT).show();
                 } else {
                     goneLayouts();
+                    List<Car> allCars = DatabaseManager.getInstance().getAllCars();
+                    cars = new ArrayList<Car>();
+                    for (int i = 0; i < allCars.size(); i++)
+                        if (Common.CommonInformations.userLoggedIn != null && allCars.get(i).getPerson().getId() == Common.CommonInformations.userLoggedIn.getId() )
+                            cars.add(allCars.get(i));
 
-                    cars = DatabaseManager.getInstance().getAllCars();
                     if (cars.size() == 0) {
                         havingCar = false;
                     } else {

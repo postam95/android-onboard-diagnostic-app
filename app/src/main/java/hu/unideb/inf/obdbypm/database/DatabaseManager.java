@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import hu.unideb.inf.obdbypm.models.Car;
+import hu.unideb.inf.obdbypm.models.Person;
 import hu.unideb.inf.obdbypm.models.ServiceBookRecord;
 
 public class DatabaseManager {
@@ -39,7 +40,24 @@ public class DatabaseManager {
      * @return
      */
 
+    public void addPerson(Person person) {
+        try {
+            getHelper().getPersonDAO().create(person);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+
+    public ArrayList<Person> getAllPersons() {
+        ArrayList<Person> persons = null;
+        try {
+            persons = (ArrayList<Person>) getHelper().getPersonDAO().queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return persons;
+    }
 
 
     public ArrayList<Car> getAllCars() {

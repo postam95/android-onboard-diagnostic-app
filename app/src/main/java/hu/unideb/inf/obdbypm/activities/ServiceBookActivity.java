@@ -18,6 +18,8 @@ import hu.unideb.inf.obdbypm.R;
 import hu.unideb.inf.obdbypm.adapters.ExpandableListAdapter;
 import hu.unideb.inf.obdbypm.database.DatabaseManager;
 import hu.unideb.inf.obdbypm.models.Car;
+import hu.unideb.inf.obdbypm.models.Person;
+import hu.unideb.inf.obdbypm.statics.Common;
 
 public class ServiceBookActivity extends AppCompatActivity {
 
@@ -74,10 +76,10 @@ public class ServiceBookActivity extends AppCompatActivity {
             cars.clear();
 
         //get all data to Lists
-        ArrayList<Car> catArrayList = DatabaseManager.getInstance().getAllCars();
-        for (int i = 0; i < catArrayList.size(); i++) {
-            cars.add(catArrayList.get(i));
-        }
+        ArrayList<Car> carArrayList = DatabaseManager.getInstance().getAllCars();
+        for (int i = 0; i < carArrayList.size(); i++)
+            if (Common.CommonInformations.userLoggedIn != null && carArrayList.get(i).getPerson().getId() == Common.CommonInformations.userLoggedIn.getId() )
+                cars.add(carArrayList.get(i));
 
         if (cars.size() == 0) {
             //no data in database
