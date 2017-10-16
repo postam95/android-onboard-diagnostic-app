@@ -72,27 +72,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="196dp" />
     <TextView
+        android:id="@+id/welcomeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to the OBDII Application, Mario!"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="16dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="E-mail"
+        android:id="@+id/textviewEmail"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
-    <TextView
-        android:id="@+id/textMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="You're logged in."
-        android:textColor="@android:color/holo_green_dark"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="160dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="wrap_content"
@@ -111,6 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password"
+        android:id="@+id/textviewPassword"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="80dp"
         android:layout_marginLeft="8dp"

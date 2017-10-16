@@ -30,7 +30,9 @@ import hu.unideb.inf.obdbypm.statics.Common;
 
 public class MainActivity extends AppCompatActivity {
     private Button loginButton;
-    private TextView loginMessage;
+    private TextView welcomeMessage;
+    private TextView tvEmail;
+    private TextView tvPassword;
     private EditText email;
     private EditText password;
 
@@ -42,19 +44,25 @@ public class MainActivity extends AppCompatActivity {
         DatabaseManager.init(this);
 
         loginButton = (Button) findViewById(R.id.loginBtn);
-        loginMessage = (TextView) findViewById(R.id.textMessage);
+        welcomeMessage = (TextView) findViewById(R.id.welcomeMessage);
         email = (EditText) findViewById(R.id.editTextEmail);
         password = (EditText) findViewById(R.id.editTextPassword);
+        tvEmail = (TextView) findViewById(R.id.textviewEmail);
+        tvPassword = (TextView) findViewById(R.id.textviewPassword);
 
         if (Common.CommonInformations.userLoggedIn == null)
         {
             loginButton.setText("LOGIN");
-            loginMessage.setVisibility(View.GONE);
+            welcomeMessage.setVisibility(View.GONE);
+            tvPassword.setVisibility(View.VISIBLE);
+            tvEmail.setVisibility(View.VISIBLE);
         }
         else
         {
             loginButton.setText("LOGOUT");
-            loginMessage.setVisibility(View.VISIBLE);
+            welcomeMessage.setVisibility(View.VISIBLE);
+            tvPassword.setVisibility(View.GONE);
+            tvEmail.setVisibility(View.GONE);
         }
     }
 
@@ -95,29 +103,64 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickLoginBtn(View v)
     {
+        List<Person> users = DatabaseManager.getInstance().getAllPersons();
+        if (users.size() == 0){
+            Toast.makeText(getApplicationContext(),
+                    "Wrong e-mail address or password!" , Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
+
         if (Common.CommonInformations.userLoggedIn == null)
         {
-            List<Person> users = DatabaseManager.getInstance().getAllPersons();
+
             for (int i = 0; i < users.size(); i++)
             {
                 if (users.get(i).getEmailAddress().equals(email.getText().toString().trim()) &&
                         users.get(i).getPassword().equals(password.getText().toString().trim()))
                 {
                     Common.CommonInformations.userLoggedIn = users.get(i);
+                    welcomeMessage.setText("Welcome to the OBDII Application, " + users.get(i).getName() + "!");
                     loginButton.setText("LOGOUT");
-                    loginMessage.setVisibility(View.VISIBLE);
-                    break;
+                    welcomeMessage.setVisibility(View.VISIBLE);
+                    tvPassword.setVisibility(View.GONE);
+                    tvEmail.setVisibility(View.GONE);
+                    email.setVisibility(View.GONE);
+                    password.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(),
+                            "You have logged in!" , Toast.LENGTH_LONG)
+                            .show();
+                    return;
                 }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),
+                            "Wrong e-mail address or password!" , Toast.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+
             }
         }
         else
         {
             Common.CommonInformations.userLoggedIn = null;
             loginButton.setText("LOGIN");
-            loginMessage.setVisibility(View.GONE);
+            welcomeMessage.setVisibility(View.GONE);
+            tvPassword.setVisibility(View.VISIBLE);
+            tvEmail.setVisibility(View.VISIBLE);
+            email.setVisibility(View.VISIBLE);
+            password.setVisibility(View.VISIBLE);
+
+            Toast.makeText(getApplicationContext(),
+                    "You have logged out!" , Toast.LENGTH_LONG)
+                    .show();
+            return;
         }
 
     }
+
     public void onClickNavigateToBluetoothChooseBtn(View v)
     {
         ArrayList deviceStrs = new ArrayList();
@@ -154,6 +197,5 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setTitle("Choose Bluetooth device");
         alertDialog.show();
     }
-
 
 }

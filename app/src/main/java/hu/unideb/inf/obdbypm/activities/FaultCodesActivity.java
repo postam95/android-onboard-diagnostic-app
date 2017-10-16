@@ -24,63 +24,34 @@ public class FaultCodesActivity extends AppCompatActivity {
     private ArrayList<String> faultCodes;
     private HashMap<String, String> faultCodesMap;
     private ListView listView;
-    private static boolean isRead = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fault_codes);
 
-        if (!isRead)
+        //Read from file
+        if (faultCodesMap == null)
             LoadText(R.raw.fault_codes);
 
+        //Init fault codes for testing
         faultCodes = new ArrayList<String>();
         faultCodes.add("P0001");
-        faultCodes.add("P0002");
-        faultCodes.add("P0003");
-        faultCodes.add("P0004");
-        faultCodes.add("P0005");
-        faultCodes.add("P0006");
-        faultCodes.add("P0007");
-        faultCodes.add("P0008");
-        faultCodes.add("P0010");
-        faultCodes.add("P0011");
-        faultCodes.add("P0012");
-        faultCodes.add("P0013");
-        faultCodes.add("P0014");
-        faultCodes.add("P0015");
-        faultCodes.add("P0016");
-        faultCodes.add("P0017");
+        faultCodes.add("P1002");
+        faultCodes.add("C0003");
+        faultCodes.add("C1004");
+        faultCodes.add("B0005");
+        faultCodes.add("B2006");
+        faultCodes.add("U0007");
+        faultCodes.add("U1008");
+        faultCodes.add("Z0010");
 
         listView = (ListView) findViewById(R.id.list);
-
-        // ListView Item Click Listener
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-                // ListView Clicked item index
-                int itemPosition     = position;
-
-                // ListView Clicked item value
-                String  itemValue    = (String) listView.getItemAtPosition(position);
-
-                // Show Alert
-                Toast.makeText(getApplicationContext(),
-                        "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-                        .show();
-
-            }
-
-        });
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, faultCodes);
 
         listView.setAdapter(adapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -95,13 +66,33 @@ public class FaultCodesActivity extends AppCompatActivity {
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
-                        faultCodesMap.get(faultCodes.get(position)) , Toast.LENGTH_LONG)
+                        getFaultCodeDescription(faultCodes.get(position)) , Toast.LENGTH_LONG)
                         .show();
 
             }
 
         });
+
     }
+
+    private String getFaultCodeDescription(String code)   {
+        String codeDesc = faultCodesMap.get(code);
+
+        if (codeDesc != null)
+            return codeDesc;
+        else if (code.startsWith("P1") ||
+                code.startsWith("P30") || code.startsWith("P33"))
+            return "Manufacturer-specific powertrain issue";
+        else if (code.startsWith("C1") || code.startsWith("C2"))
+            return "Manufacturer-specific chassis issue";
+        else if (code.startsWith("B1") || code.startsWith("B2"))
+            return "Manufacturer-specific body issue";
+        else if (code.startsWith("U1") || code.startsWith("U2"))
+            return "Manufacturer-specific network communication issue";
+        else
+            return "Unknown issue";
+    }
+
 
     public void LoadText(int resourceId) {
         // The InputStream opens the resourceId and sends it to the buffer
