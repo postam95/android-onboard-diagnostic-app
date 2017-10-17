@@ -12,4 +12,16 @@ public class LiveDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_data);
     }
+
+    @Override
+    protected void onStart() {
+        //SECOND
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        //LAST - ALWAYS RUNNING
+        super.onResume();
+    }
 }

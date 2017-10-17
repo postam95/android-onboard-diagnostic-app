@@ -75,6 +75,18 @@ public class FaultCodesActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        //SECOND
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        //LAST - ALWAYS RUNNING
+        super.onResume();
+    }
+
     private String getFaultCodeDescription(String code)   {
         String codeDesc = faultCodesMap.get(code);
 

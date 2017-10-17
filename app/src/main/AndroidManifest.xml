@@ -13,9 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,30 +26,39 @@
         <activity
             android:name=".activities.LiveDataActivity"
             android:label="Live data"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.FaultCodesActivity"
             android:label="Fault codes"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ServiceBookActivity"
             android:label="Service Book"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.RegistrationActivity"
             android:label="Registration"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HeadupDisplayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Head-Up Display"
+            android:launchMode="singleInstance"
             android:screenOrientation="reverseLandscape"
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".activities.AddingActivity"
             android:label="Adding to the service book"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activities.Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

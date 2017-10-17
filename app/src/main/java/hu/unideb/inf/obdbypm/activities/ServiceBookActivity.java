@@ -34,14 +34,13 @@ public class ServiceBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_book);
 
-        DatabaseManager.init(this);
+        //set data to views
 
         notice = (TextView)findViewById(R.id.notice);
         listView = (ExpandableListView)findViewById(R.id.list_item);
         progressBar = (ProgressBar)findViewById(R.id.progress);
 
         cars = new ArrayList<>();
-        //set data to views
         adapter = new ExpandableListAdapter(this, cars);
         listView.setAdapter(adapter);
     }
@@ -50,8 +49,10 @@ public class ServiceBookActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d("Main", "resume");
+
         getDataFromDB();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,6 +89,8 @@ public class ServiceBookActivity extends AppCompatActivity {
             notice.setVisibility(View.VISIBLE);
         } else {
             adapter.notifyDataSetChanged();
+            listView.setVisibility(View.VISIBLE);
+            notice.setVisibility(View.GONE);
         }
     }
 }

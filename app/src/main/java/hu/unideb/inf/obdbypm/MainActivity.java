@@ -2,8 +2,10 @@ package hu.unideb.inf.obdbypm;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,9 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import hu.unideb.inf.obdbypm.activities.FaultCodesActivity;
 import hu.unideb.inf.obdbypm.activities.LiveDataActivity;
@@ -27,6 +31,11 @@ import hu.unideb.inf.obdbypm.database.DatabaseManager;
 import hu.unideb.inf.obdbypm.models.Car;
 import hu.unideb.inf.obdbypm.models.Person;
 import hu.unideb.inf.obdbypm.statics.Common;
+
+import static hu.unideb.inf.obdbypm.obd.Connection.connect;
+import static hu.unideb.inf.obdbypm.obd.Connection.deviceAddress;
+import static hu.unideb.inf.obdbypm.obd.Connection.initialize;
+import static hu.unideb.inf.obdbypm.obd.Connection.showAndGetPairedBluetoothDevices;
 
 public class MainActivity extends AppCompatActivity {
     private Button loginButton;
@@ -50,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
         tvEmail = (TextView) findViewById(R.id.textviewEmail);
         tvPassword = (TextView) findViewById(R.id.textviewPassword);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    }
+
+    protected void onStart() {
+        //SECOND
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        //LAST - ALWAYS RUNNING
+        super.onResume();
         if (Common.CommonInformations.userLoggedIn == null)
         {
             loginButton.setText("LOGIN");
@@ -121,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                         users.get(i).getPassword().equals(password.getText().toString().trim()))
                 {
                     Common.CommonInformations.userLoggedIn = users.get(i);
-                    welcomeMessage.setText("Welcome to the OBDII Application, " + users.get(i).getName() + "!");
+                    welcomeMessage.setText("Welcome to the OBDIIbyOPM App, " + users.get(i).getName() + "!");
                     loginButton.setText("LOGOUT");
                     welcomeMessage.setVisibility(View.VISIBLE);
                     tvPassword.setVisibility(View.GONE);
@@ -130,13 +151,6 @@ public class MainActivity extends AppCompatActivity {
                     password.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(),
                             "You have logged in!" , Toast.LENGTH_LONG)
-                            .show();
-                    return;
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(),
-                            "Wrong e-mail address or password!" , Toast.LENGTH_LONG)
                             .show();
                     return;
                 }
@@ -159,43 +173,33 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        Toast.makeText(getApplicationContext(),
+                "Wrong e-mail address or password!" , Toast.LENGTH_LONG)
+                .show();
+        return;
+
+    }
+
+    public void onClickConnectBtn(View v)
+    {
+        if (!connect())  {
+            Toast.makeText(getApplicationContext(),
+                    "Something went wrong during the connection." , Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
+        if (!initialize()){
+            Toast.makeText(getApplicationContext(),
+                    "Something went wrong during the connection." , Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
     }
 
     public void onClickNavigateToBluetoothChooseBtn(View v)
     {
-        ArrayList deviceStrs = new ArrayList();
-        final ArrayList devices = new ArrayList();
-
-        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-        Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
-        if (pairedDevices.size() > 0)
-        {
-            for (BluetoothDevice device : pairedDevices)
-            {
-                deviceStrs.add(device.getName() + "\n" + device.getAddress());
-                devices.add(device.getAddress());
-            }
-        }
-
-        // show list
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.select_dialog_singlechoice,
-                deviceStrs.toArray(new String[deviceStrs.size()]));
-
-        alertDialog.setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                dialog.dismiss();
-                int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                //String deviceAddress = devices.get(position);
-                // TODO save deviceAddress
-            }
-        });
-
-        alertDialog.setTitle("Choose Bluetooth device");
-        alertDialog.show();
+        showAndGetPairedBluetoothDevices(this);
     }
 
 }

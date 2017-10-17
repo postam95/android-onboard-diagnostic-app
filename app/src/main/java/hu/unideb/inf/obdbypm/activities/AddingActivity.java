@@ -55,6 +55,18 @@ public class AddingActivity extends AppCompatActivity {
         btnOK.setOnClickListener(onConfirmListener());
     }
 
+    @Override
+    protected void onStart() {
+        //SECOND
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        //LAST - ALWAYS RUNNING
+        super.onResume();
+    }
+
     private View.OnClickListener onConfirmListener() {
         return new View.OnClickListener() {
             @Override

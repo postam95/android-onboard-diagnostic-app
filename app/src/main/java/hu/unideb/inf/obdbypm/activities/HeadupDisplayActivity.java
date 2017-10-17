@@ -112,6 +112,18 @@ public class HeadupDisplayActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        //SECOND
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        //LAST - ALWAYS RUNNING
+        super.onResume();
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 

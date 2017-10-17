@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Date;
 import java.util.List;
 
 import hu.unideb.inf.obdbypm.MainActivity;
@@ -20,18 +21,34 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText editEmail;
     private EditText editPassword;
     private EditText editPassword2;
+    public static Integer num = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //FIRST
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-
-        DatabaseManager.init(this);
 
         editName = (EditText) findViewById(R.id.editTextName);
         editEmail = (EditText) findViewById(R.id.editTextEmail);
         editPassword = (EditText) findViewById(R.id.editTextPassword);
         editPassword2 = (EditText) findViewById(R.id.editTextPassword2);
+    }
+
+    @Override
+    protected void onStart() {
+        //SECOND
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        //LAST - ALWAYS RUNNING
+        super.onResume();
+    }
+
+    protected void onResume(Bundle savedInstanceState) {
+
     }
 
     public void onClickSaveBtn(View v)
