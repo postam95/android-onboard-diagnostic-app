@@ -33,6 +33,9 @@ public class Connection {
         final ArrayList devices = new ArrayList();
 
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!btAdapter.isEnabled()) {
+            btAdapter.enable();
+        }
         Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
             if (pairedDevices.size() > 0)
         {
