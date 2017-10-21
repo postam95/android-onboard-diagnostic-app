@@ -37,7 +37,7 @@
             android:name=".activities.ServiceBookActivity"
             android:label="Service Book"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.RegistrationActivity"
             android:label="Registration"
@@ -48,16 +48,24 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="Head-Up Display"
             android:launchMode="singleInstance"
-            android:screenOrientation="reverseLandscape"
+            android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".activities.AddingActivity"
-            android:label="Adding to the service book"
+            android:label="Adding"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.Main2Activity"
-            android:label="@string/title_activity_main2"
+            android:name=".activities.AddingCarActivity"
+            android:label="Car"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.AddingServiceActivity"
+            android:label="Service"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

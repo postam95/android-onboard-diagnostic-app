@@ -1,5 +1,7 @@
 package hu.unideb.inf.obdbypm.statics;
 
+import android.support.v7.app.AppCompatActivity;
+
 import hu.unideb.inf.obdbypm.models.Person;
 
 /**

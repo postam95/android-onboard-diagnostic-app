@@ -95,7 +95,6 @@ public class AddingActivity extends AppCompatActivity {
 
                         //save to database
                         DatabaseManager.getInstance().newServiceBookRecordAppend(serviceBookRecord);
-                        DatabaseManager.getInstance().updateServiceBookRecord(serviceBookRecord);
                     }
                 }
                 goneLayouts();

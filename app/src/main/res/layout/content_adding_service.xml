@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="hu.unideb.inf.obdbypm.activities.AddingServiceActivity"
+    tools:showIn="@layout/activity_adding_service">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="2"
+        >
+        <TextView
+            android:text="Car"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <Spinner
+            android:id="@+id/spinnerCars"
+            android:layout_width="170dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:maxLength="50"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:text="Service company"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <EditText
+            android:id="@+id/editTextServiceCompany"
+            android:layout_width="170dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:maxLength="50"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Current mileage"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <EditText
+            android:id="@+id/editTextCurrentMileage"
+            android:layout_width="170dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:maxLength="10"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Oil change"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <CheckBox
+            android:id="@+id/checkBoxOilChange"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Chassis repair"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <CheckBox
+            android:id="@+id/checkBoxChassisRepair"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Oil filter change"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <CheckBox
+            android:id="@+id/checkBoxOilFilterChange"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Air filter change"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <CheckBox
+            android:id="@+id/checkBoxAirFilterChange"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Tires rotate"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <CheckBox
+            android:id="@+id/checkBoxTiresRotate"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Brakes adjust"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <CheckBox
+            android:id="@+id/checkBoxBrakeAdjust"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+
+        <TextView
+            android:text="Wheels align"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <CheckBox
+            android:id="@+id/checkBoxWheelsAlign"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Tires replace"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <CheckBox
+            android:id="@+id/checkBoxTiresReplace"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Transmission"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <CheckBox
+            android:id="@+id/checkBoxTransmission"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Engine tune-up"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <CheckBox
+            android:id="@+id/checkBoxEgineTuneup"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Cooling system"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <CheckBox
+            android:id="@+id/checkBoxCoolingSystem"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Comment"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <EditText
+            android:id="@+id/editTextComment"
+            android:layout_width="170dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:maxLength="150"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Total cost"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <EditText
+            android:id="@+id/editTextTotalCost"
+            android:layout_width="170dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:maxLength="20"
+            android:layout_gravity="center"
+            />
+
+    </GridLayout>
+
+</android.support.v4.widget.NestedScrollView>

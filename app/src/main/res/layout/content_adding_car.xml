@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="hu.unideb.inf.obdbypm.activities.AddingCarActivity"
+    tools:showIn="@layout/activity_adding_car">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="2" android:minHeight="50dp"
+        >
+
+
+        <TextView
+            android:text="Brand"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <EditText
+            android:id="@+id/editTextBrand"
+            android:layout_width="170dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:maxLength="50"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:text="Type"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <EditText
+            android:id="@+id/editTextType"
+            android:layout_width="170dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:maxLength="50"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:text="License number"
+            android:textSize="20dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="center"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            />
+        <EditText
+            android:id="@+id/editTextLicenseNumber"
+            android:layout_width="170dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:maxLength="50"
+            android:layout_gravity="center"
+            />
+
+    </GridLayout>
+
+</android.support.v4.widget.NestedScrollView>

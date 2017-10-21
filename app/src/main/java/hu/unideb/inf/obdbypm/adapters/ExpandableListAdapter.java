@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import hu.unideb.inf.obdbypm.R;
@@ -138,6 +139,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //delete in database
+                        ArrayList<ServiceBookRecord> services = DatabaseManager.getInstance().getAllServiceBookRecords();
+                        for (ServiceBookRecord s : services) {
+                            if (s.getCar().getId() == getGroup(groupPosition).getId())
+                                DatabaseManager.getInstance().deleteServiceBookRecord(s.getId());
+                        }
                         DatabaseManager.getInstance().deleteCar(getGroup(groupPosition).getId());
 
                         //update views
@@ -157,7 +163,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
-                alertDialog.setTitle("EDIT Cat");
+                alertDialog.setTitle("Edit car");
                 alertDialog.setMessage("Please type a new cat name");
 
                 final EditText input = new EditText(activity);

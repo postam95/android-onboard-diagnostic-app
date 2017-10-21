@@ -8,22 +8,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.unideb.inf.obdbypm.MainActivity;
 import hu.unideb.inf.obdbypm.R;
 import hu.unideb.inf.obdbypm.adapters.ExpandableListAdapter;
 import hu.unideb.inf.obdbypm.database.DatabaseManager;
 import hu.unideb.inf.obdbypm.models.Car;
-import hu.unideb.inf.obdbypm.models.Person;
+import hu.unideb.inf.obdbypm.models.ServiceBookRecord;
 import hu.unideb.inf.obdbypm.statics.Common;
 
 public class ServiceBookActivity extends AppCompatActivity {
 
-    private ProgressBar progressBar;
     private ExpandableListView listView;
     private TextView notice;
     private List<Car> cars;
@@ -35,14 +34,14 @@ public class ServiceBookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service_book);
 
         //set data to views
-
         notice = (TextView)findViewById(R.id.notice);
         listView = (ExpandableListView)findViewById(R.id.list_item);
-        progressBar = (ProgressBar)findViewById(R.id.progress);
 
         cars = new ArrayList<>();
         adapter = new ExpandableListAdapter(this, cars);
         listView.setAdapter(adapter);
+
+        adapter.notify();
     }
 
     @Override
@@ -62,13 +61,21 @@ public class ServiceBookActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.add) {
-            Intent i = new Intent(this, AddingActivity.class);
+        if (item.getItemId() == R.id.addCar) {
+            Intent i = new Intent(this, AddingCarActivity.class);
             startActivity(i);
-
             return true;
         }
-
+        else if (item.getItemId() == R.id.addService) {
+            Intent i = new Intent(this, AddingServiceActivity.class);
+            startActivity(i);
+            return true;
+        }
+        else if (item.getItemId() == android.R.id.home){
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -82,6 +89,8 @@ public class ServiceBookActivity extends AppCompatActivity {
             if (Common.CommonInformations.userLoggedIn != null && carArrayList.get(i).getPerson().getId() == Common.CommonInformations.userLoggedIn.getId() )
                 cars.add(carArrayList.get(i));
 
+        ArrayList<ServiceBookRecord> services = DatabaseManager.getInstance().getAllServiceBookRecords();
+
         if (cars.size() == 0) {
             //no data in database
             listView.setVisibility(View.GONE);
@@ -92,5 +101,14 @@ public class ServiceBookActivity extends AppCompatActivity {
             listView.setVisibility(View.VISIBLE);
             notice.setVisibility(View.GONE);
         }
+    }
+
+    public void editCarNavigation(Car car) {
+        Intent intent = new Intent(ServiceBookActivity.this, AddingCarActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("key", 1); //Your id
+        intent.putExtras(b); //Put your id to your next Intent
+        startActivity(intent);
+        finish();
     }
 }

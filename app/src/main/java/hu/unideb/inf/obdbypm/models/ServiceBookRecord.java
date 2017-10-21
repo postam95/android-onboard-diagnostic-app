@@ -34,6 +34,9 @@ public class ServiceBookRecord {
     @DatabaseField(columnName = "airFilterChange")
     private boolean airFilterChange;
 
+    @DatabaseField(columnName = "oilFilterChange")
+    private boolean oilFilterChange;
+
     @DatabaseField(columnName = "tiresRotate")
     private boolean tiresRotate;
 
@@ -129,6 +132,14 @@ public class ServiceBookRecord {
 
     public void setAirFilterChange(boolean airFilterChange) {
         this.airFilterChange = airFilterChange;
+    }
+
+    public boolean isOilFilterChange() {
+        return oilFilterChange;
+    }
+
+    public void setOilFilterChange(boolean oilFilterChange) {
+        this.oilFilterChange = oilFilterChange;
     }
 
     public boolean isTiresRotate() {

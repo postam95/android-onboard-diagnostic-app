@@ -95,7 +95,6 @@ public class Connection {
             new LineFeedOffCommand().run(socket.getInputStream(), socket.getOutputStream());
             new TimeoutCommand(125).run(socket.getInputStream(), socket.getOutputStream());
             new SelectProtocolCommand(ObdProtocols.AUTO).run(socket.getInputStream(), socket.getOutputStream());
-            new AmbientAirTemperatureCommand().run(socket.getInputStream(), socket.getOutputStream());
         } catch (Exception e) {
             e.printStackTrace();
             return false;
