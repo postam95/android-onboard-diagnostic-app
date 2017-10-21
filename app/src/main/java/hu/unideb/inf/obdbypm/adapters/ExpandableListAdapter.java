@@ -73,7 +73,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             holder = (ChildViewHolder) convertView.getTag();
         }
 
-        holder.textView.setText(getChild(groupPosition, childPosition).getName());
+        holder.textView.setText(getChild(groupPosition, childPosition).getServiceCompany());
         holder.btnEdit.setOnClickListener(onEditServiceBookRecordListener(getChild(groupPosition, childPosition),
                 groupPosition, childPosition));
         holder.btnDelete.setOnClickListener(onDeleteServiceBookRecordListener(groupPosition, childPosition));
@@ -94,7 +94,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             holder = (HeaderViewHolder) convertView.getTag();
         }
 
-        holder.textView.setText(getGroup(groupPosition).getName());
+        holder.textView.setText(getGroup(groupPosition).getBrand());
         holder.btnEdit.setOnClickListener(onEditCarListener(getGroup(groupPosition), groupPosition));
         holder.btnDelete.setOnClickListener(onDeleteCarListener(groupPosition));
 
@@ -165,7 +165,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
                 input.setLayoutParams(lp);
-                input.setText(car.getName());
+                input.setText(car.getBrand());
 
                 alertDialog.setView(input);
                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -173,11 +173,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         //update database with new cat name
-                        car.setName(input.getText().toString().trim());
+                        car.setBrand(input.getText().toString().trim());
                         DatabaseManager.getInstance().updateCar(car);
 
                         //update views
-                        cars.get(position).setName(input.getText().toString().trim());
+                        cars.get(position).setBrand(input.getText().toString().trim());
                         notifyDataSetChanged();
                     }
                 });
@@ -202,7 +202,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
                 input.setLayoutParams(lp);
-                input.setText(serviceBookRecord.getName());
+                input.setText(serviceBookRecord.getServiceCompany());
 
                 alertDialog.setView(input);
                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -210,11 +210,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         //update database
-                        serviceBookRecord.setName(input.getText().toString().trim());
+                        serviceBookRecord.setServiceCompany(input.getText().toString().trim());
                         DatabaseManager.getInstance().updateServiceBookRecord(serviceBookRecord);
 
                         //update views
-                        cars.get(groupPos).getServiceBookRecords().get(childPos).setName(input.getText().toString());
+                        cars.get(groupPos).getServiceBookRecords().get(childPos).setServiceCompany(input.getText().toString());
                         notifyDataSetChanged();
                     }
                 });

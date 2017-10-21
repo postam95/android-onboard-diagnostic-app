@@ -28,6 +28,9 @@ public class Person {
     @ForeignCollectionField
     private ForeignCollection<Car> cars;
 
+
+
+
     public int getId() {
         return id;
     }

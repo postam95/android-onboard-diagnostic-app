@@ -76,7 +76,7 @@ public class AddingActivity extends AppCompatActivity {
                         Toast.makeText(getBaseContext(), "Please input car name", Toast.LENGTH_SHORT).show();
                     } else {
                         Car car = new Car();
-                        car.setName(editCar.getText().toString().trim());
+                        car.setBrand(editCar.getText().toString().trim());
                         car.setPerson(Common.CommonInformations.userLoggedIn);
 
                         //save new object to db
@@ -89,7 +89,7 @@ public class AddingActivity extends AppCompatActivity {
                         ServiceBookRecord serviceBookRecord = new ServiceBookRecord();
                         Car car = (Car) spinner.getSelectedItem();
                         car.setPerson(Common.CommonInformations.userLoggedIn);
-                        serviceBookRecord.setName(editServiceBookRecord.getText().toString().trim());
+                        serviceBookRecord.setServiceCompany(editServiceBookRecord.getText().toString().trim());
                         serviceBookRecord.setCar(car);
 
 

@@ -13,17 +13,26 @@ import java.util.List;
 
 public class Car {
 
-    @DatabaseField(generatedId=true)
+    @DatabaseField(generatedId=true, columnName = "id")
     private int id;
 
-    @DatabaseField (columnName = "name")
-    private String name;
+    @DatabaseField(columnName = "brand")
+    private String brand;
 
-    @ForeignCollectionField
+    @DatabaseField(columnName = "type")
+    private String type;
+
+    @DatabaseField(columnName = "licenseNumber")
+    private String licenseNumber;
+
+    @ForeignCollectionField(columnName = "serviceBookRecords")
     private ForeignCollection<ServiceBookRecord> serviceBookRecords;
 
-    @DatabaseField(foreign=true, foreignAutoRefresh=true)
+    @DatabaseField(foreign=true, foreignAutoRefresh=true, columnName = "person")
     private Person person;
+
+
+
 
     public int getId() {
         return id;
@@ -33,12 +42,28 @@ public class Car {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getLicenseNumber() {
+        return licenseNumber;
+    }
+
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
     }
 
     public List<ServiceBookRecord> getServiceBookRecords() {
@@ -63,6 +88,6 @@ public class Car {
 
     @Override
     public String toString() {
-        return this.name;
+        return this.brand + " " + this.type;
     }
 }
