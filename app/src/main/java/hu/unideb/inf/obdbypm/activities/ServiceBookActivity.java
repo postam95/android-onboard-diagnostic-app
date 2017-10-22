@@ -40,8 +40,6 @@ public class ServiceBookActivity extends AppCompatActivity {
         cars = new ArrayList<>();
         adapter = new ExpandableListAdapter(this, cars);
         listView.setAdapter(adapter);
-
-        adapter.notify();
     }
 
     @Override
@@ -55,7 +53,7 @@ public class ServiceBookActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_service_book, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.github.pires.obd.commands.protocol.EchoOffCommand;
 import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
@@ -28,7 +29,19 @@ public class Connection {
     public static BluetoothSocket socket = null;
     public static String deviceAddress = null;
 
-    public static void showAndGetPairedBluetoothDevices(AppCompatActivity actual){
+    public static void turnOnBluetooth()    {
+        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!btAdapter.isEnabled())
+            btAdapter.enable();
+    }
+
+    public static void turnOffBluetooth()   {
+        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (btAdapter.isEnabled())
+            btAdapter.disable();
+    }
+
+    public static void showAndGetPairedBluetoothDevices(final AppCompatActivity actual){
         ArrayList deviceStrs = new ArrayList();
         final ArrayList devices = new ArrayList();
 
@@ -59,6 +72,8 @@ public class Connection {
                 dialog.dismiss();
                 int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
                 deviceAddress = devices.get(position).toString();
+                Toast.makeText(actual, deviceAddress + " has been saved!", Toast.LENGTH_SHORT).show();
+
             }
         });
 

@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,18 +35,21 @@ import hu.unideb.inf.obdbypm.models.Car;
 import hu.unideb.inf.obdbypm.models.Person;
 import hu.unideb.inf.obdbypm.statics.Common;
 
-import static hu.unideb.inf.obdbypm.obd.Connection.connect;
 import static hu.unideb.inf.obdbypm.obd.Connection.deviceAddress;
-import static hu.unideb.inf.obdbypm.obd.Connection.initialize;
 import static hu.unideb.inf.obdbypm.obd.Connection.showAndGetPairedBluetoothDevices;
+import static hu.unideb.inf.obdbypm.obd.Connection.turnOffBluetooth;
+import static hu.unideb.inf.obdbypm.obd.Connection.turnOnBluetooth;
 
 public class MainActivity extends AppCompatActivity {
-    private Button loginButton;
+    private ImageButton loginButton;
     private TextView welcomeMessage;
     private TextView tvEmail;
     private TextView tvPassword;
     private EditText email;
     private EditText password;
+    private TextView bluetoothMessage;
+    private BluetoothAdapter btAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +58,17 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseManager.init(this);
 
-        loginButton = (Button) findViewById(R.id.loginBtn);
+        btAdapter = BluetoothAdapter.getDefaultAdapter();
+        loginButton = (ImageButton) findViewById(R.id.loginBtn);
         welcomeMessage = (TextView) findViewById(R.id.welcomeMessage);
         email = (EditText) findViewById(R.id.editTextEmail);
         password = (EditText) findViewById(R.id.editTextPassword);
         tvEmail = (TextView) findViewById(R.id.textviewEmail);
         tvPassword = (TextView) findViewById(R.id.textviewPassword);
+        bluetoothMessage = (TextView) findViewById(R.id.bluetoothMessage);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
     }
 
     protected void onStart() {
@@ -73,17 +82,26 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (Common.CommonInformations.userLoggedIn == null)
         {
-            loginButton.setText("LOGIN");
+            loginButton.setImageResource(R.drawable.login_image);
             welcomeMessage.setVisibility(View.GONE);
             tvPassword.setVisibility(View.VISIBLE);
             tvEmail.setVisibility(View.VISIBLE);
         }
         else
         {
-            loginButton.setText("LOGOUT");
+            loginButton.setImageResource(R.drawable.logout_image);
             welcomeMessage.setVisibility(View.VISIBLE);
             tvPassword.setVisibility(View.GONE);
             tvEmail.setVisibility(View.GONE);
+        }
+
+        if (btAdapter.isEnabled()) {
+            bluetoothMessage.setText("Bluetooth is enabled");
+            bluetoothMessage.setTextColor(Color.GREEN);
+        }
+        else    {
+            bluetoothMessage.setText("Bluetooth is disabled");
+            bluetoothMessage.setTextColor(Color.RED);
         }
     }
 
@@ -142,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
                         users.get(i).getPassword().equals(password.getText().toString().trim()))
                 {
                     Common.CommonInformations.userLoggedIn = users.get(i);
-                    welcomeMessage.setText("Welcome to the OBDIIbyOPM App, " + users.get(i).getName() + "!");
-                    loginButton.setText("LOGOUT");
+                    welcomeMessage.setText("Welcome to the OBDIIbyPM App, " + users.get(i).getName() + "!");
+                    loginButton.setImageResource(R.drawable.logout_image);
                     welcomeMessage.setVisibility(View.VISIBLE);
                     tvPassword.setVisibility(View.GONE);
                     tvEmail.setVisibility(View.GONE);
@@ -160,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         else
         {
             Common.CommonInformations.userLoggedIn = null;
-            loginButton.setText("LOGIN");
+            loginButton.setImageResource(R.drawable.login_image);
             welcomeMessage.setVisibility(View.GONE);
             tvPassword.setVisibility(View.VISIBLE);
             tvEmail.setVisibility(View.VISIBLE);
@@ -180,26 +198,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onClickConnectBtn(View v)
+    public void onClickBluetoothBtn(View v)
     {
-        if (!connect())  {
-            Toast.makeText(getApplicationContext(),
-                    "Something went wrong during the connection." , Toast.LENGTH_LONG)
-                    .show();
-            return;
+        if (btAdapter.isEnabled())  {
+            turnOffBluetooth();
+            Toast.makeText(getBaseContext(), "Bluetooth has been turned off!", Toast.LENGTH_SHORT).show();
+            bluetoothMessage.setText("Bluetooth is disabled");
+            bluetoothMessage.setTextColor(Color.RED);
         }
-
-        if (!initialize()){
-            Toast.makeText(getApplicationContext(),
-                    "Something went wrong during the connection." , Toast.LENGTH_LONG)
-                    .show();
-            return;
+        else    {
+            turnOnBluetooth();
+            Toast.makeText(getBaseContext(), "Bluetooth has been turned on!", Toast.LENGTH_SHORT).show();
+            bluetoothMessage.setText("Bluetooth is enabled");
+            bluetoothMessage.setTextColor(Color.GREEN);
         }
     }
 
     public void onClickNavigateToBluetoothChooseBtn(View v)
     {
-        showAndGetPairedBluetoothDevices(this);
+        if (btAdapter.isEnabled()) {
+            showAndGetPairedBluetoothDevices(this);
+        }
+        else
+            Toast.makeText(getApplicationContext(),
+                    "First you should turn on the bluetooth!" , Toast.LENGTH_LONG)
+                    .show();
+
     }
 
 }

@@ -4,96 +4,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="hu.unideb.inf.obdbypm.MainActivity">
 
-    <Button
+
+    <TextView
+        android:id="@+id/bluetoothMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bluetooth is disabled"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="16dp"
+        android:layout_marginTop="-2dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="2dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.502" />
+
+    <ImageButton
         android:id="@+id/btnNavigateToLiveData"
         android:layout_width="138dp"
         android:layout_height="74dp"
-        android:text="Live data"
+        android:background="@android:color/white"
         android:onClick="onClickNavigateToLiveDataBtn"
         android:layout_marginLeft="35dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="105dp" />
+        android:layout_marginBottom="105dp"
+        android:layout_marginStart="35dp"
+        android:src="@drawable/live_data_main_image"
+        />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnNavigateToFaultCodes"
         android:layout_width="138dp"
         android:layout_height="74dp"
-        android:text="Fault codes"
+        android:background="@android:color/white"
         android:onClick="onClickNavigateToFaultCodesBtn"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="15dp" />
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="35dp"
+        android:src="@drawable/faultcodes_main_image"
+        />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnNavigateToHeadupDisplay"
         android:layout_width="138dp"
         android:layout_height="74dp"
-        android:text="Head-up Display"
+        android:background="@android:color/white"
         android:onClick="onClickNavigateToHeadupDisplayBtn"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="105dp" />
+        android:layout_marginBottom="105dp"
+        android:layout_marginEnd="35dp"
+        android:src="@drawable/hud_main_image"
+        />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnNavigateToLServiceBook"
         android:layout_width="138dp"
         android:layout_height="74dp"
-        android:text="Service book"
+        android:background="@android:color/white"
         android:onClick="onClickNavigateToServiceBookBtn"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="35dp"
+        android:src="@drawable/servicebook_main_image"
+        />
 
-    <Button
-        android:id="@+id/btnConnect"
+    <ImageButton
+        android:id="@+id/btnBluetooth"
         android:layout_width="138dp"
         android:layout_height="74dp"
-        android:text="Connect"
-        android:onClick="onClickConnectBtn"
+        android:background="@android:color/white"
+        android:onClick="onClickBluetoothBtn"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="196dp" />
+        android:layout_marginBottom="196dp"
+        android:layout_marginStart="35dp"
+        android:src="@drawable/bluetooth_main_image"
+        />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnNavigateToRegistration"
         android:layout_width="138dp"
         android:layout_height="74dp"
+        android:background="@android:color/white"
         android:text="Registration"
         android:onClick="onClickNavigateToRegistrationBtn"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="196dp" />
+        android:layout_marginBottom="196dp"
+        android:layout_marginEnd="35dp"
+        android:src="@drawable/registration_main_image"
+        />
+
     <TextView
         android:id="@+id/welcomeMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to the OBDII Application, Mario!"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="16dp"
-        android:layout_marginTop="60dp"
+        android:visibility="visible"
+        android:text="Welcome to the OBDII\n   Application, Mario!"
+        android:textSize="17dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="70dp"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="E-mail"
         android:id="@+id/textviewEmail"
+        android:textColor="@color/black_overlay"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintHorizontal_bias="0.501" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -105,9 +149,11 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="27dp" />
+        android:layout_marginTop="47dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintHorizontal_bias="0.503" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -115,11 +161,13 @@
         android:text="Password"
         android:id="@+id/textviewPassword"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -128,25 +176,32 @@
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="120dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.503" />
+        app:layout_constraintHorizontal_bias="0.503"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
-    <Button
+    <ImageButton
         android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
+        android:background="@android:color/white"
         android:onClick="onClickLoginBtn"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="177dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/login_image"
+        />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -156,9 +211,10 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_input_add"
         android:onClick="onClickNavigateToBluetoothChooseBtn"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"  />
+        android:layout_marginTop="441dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>
