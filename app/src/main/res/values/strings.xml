@@ -5,6 +5,7 @@
     <string name="add_kit">Add a service book record</string>
     <string name="cat">Car name</string>
     <string name="ok">OK</string>
+    <string name="text_bluetooth_nodevice">Error! No bluetooth device selected</string>
     <string name="cancel">Cancel</string>
     <string name="kitten">Service book record name</string>
     <string name="title_activity_headup_display">HeadupDisplayActivity</string>

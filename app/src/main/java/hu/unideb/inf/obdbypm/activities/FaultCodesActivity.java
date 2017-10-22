@@ -7,9 +7,13 @@ import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +24,7 @@ import com.github.pires.obd.commands.control.TroubleCodesCommand;
 import com.github.pires.obd.commands.protocol.EchoOffCommand;
 import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
 import com.github.pires.obd.commands.protocol.ObdResetCommand;
+import com.github.pires.obd.commands.protocol.ResetTroubleCodesCommand;
 import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
 import com.github.pires.obd.enums.ObdProtocols;
 import com.github.pires.obd.exceptions.MisunderstoodCommandException;
@@ -36,6 +41,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
 
+import hu.unideb.inf.obdbypm.MainActivity;
 import hu.unideb.inf.obdbypm.R;
 import hu.unideb.inf.obdbypm.obd.Connection;
 
@@ -48,7 +54,9 @@ public class FaultCodesActivity extends AppCompatActivity {
     private BluetoothSocket socket = null;
     public String deviceAddress;
     private GetTroubleCodesTask gtct;
+    private ClearTroubleCodesTask ctct;
     private String faultCodesInString = null;
+    private static final UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final int NO_BLUETOOTH_DEVICE_SELECTED = 0;
     private static final int CANNOT_CONNECT_TO_DEVICE = 1;
     private static final int NO_DATA = 3;
@@ -66,13 +74,17 @@ public class FaultCodesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fault_codes);
 
-        //Read from file
         if (faultCodesMap == null)
             LoadText(R.raw.fault_codes);
 
-        //Init fault codes for testing
-        faultCodes = new ArrayList<String>();
+        gtct = new GetTroubleCodesTask();
+        gtct.execute(Connection.deviceAddress);
 
+    }
+
+    private void refreshListview()  {
+        faultCodes = new ArrayList<String>();
+        convertFaultCodesFromStringToList(faultCodesInString);
         listView = (ListView) findViewById(R.id.list);
 
         adapter = new ArrayAdapter<String>(this,
@@ -84,27 +96,37 @@ public class FaultCodesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-
-                // ListView Clicked item index
                 int itemPosition     = position;
-
-                // ListView Clicked item value
                 String  itemValue    = (String) listView.getItemAtPosition(position);
-
-                // Show Alert
                 Toast.makeText(getApplicationContext(),
                         getFaultCodeDescription(faultCodes.get(position)) , Toast.LENGTH_LONG)
                         .show();
-
             }
 
         });
+    }
 
+    private void clearListview()  {
+        faultCodes = new ArrayList<String>();
+        listView = (ListView) findViewById(R.id.list);
 
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, faultCodes);
 
-        gtct = new GetTroubleCodesTask();
-        gtct.execute(Connection.deviceAddress);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                int itemPosition     = position;
+                String  itemValue    = (String) listView.getItemAtPosition(position);
+                Toast.makeText(getApplicationContext(),
+                        getFaultCodeDescription(faultCodes.get(position)) , Toast.LENGTH_LONG)
+                        .show();
+            }
+
+        });
     }
 
     @Override
@@ -118,6 +140,63 @@ public class FaultCodesActivity extends AppCompatActivity {
         //LAST - ALWAYS RUNNING
         super.onResume();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_fault_codes, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.clearFaultCodes) {
+            ctct = new ClearTroubleCodesTask();
+            ctct.execute();
+            return true;
+        }
+        else if (item.getItemId() == R.id.getFaultCodes) {
+            gtct = new GetTroubleCodesTask();
+            gtct.execute();
+            return true;
+        }
+        else if (item.getItemId() == R.id.chooseBluetooth){
+            Connection.showAndGetPairedBluetoothDevices(this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private Handler mHandler = new Handler(new Handler.Callback() {
+
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case NO_BLUETOOTH_DEVICE_SELECTED:
+                    Toast.makeText(getBaseContext(), "Error! No bluetooth device selected!", Toast.LENGTH_SHORT).show();
+                    break;
+                case CANNOT_CONNECT_TO_DEVICE:
+                    Toast.makeText(getBaseContext(), "Error! Problem occurred during the connection!", Toast.LENGTH_SHORT).show();
+                    break;
+                case OBD_COMMAND_FAILURE:
+                case OBD_COMMAND_FAILURE_IO:
+                case OBD_COMMAND_FAILURE_IE:
+                case OBD_COMMAND_FAILURE_MIS:
+                case OBD_COMMAND_FAILURE_UTC:
+                case OBD_COMMAND_FAILURE_NODATA:
+                    Toast.makeText(getBaseContext(), "Error! Problem occurred during the communication!", Toast.LENGTH_SHORT).show();
+                    break;
+                case NO_DATA:
+                    Toast.makeText(getBaseContext(), "Error! No data!", Toast.LENGTH_SHORT).show();
+                    break;
+                case DATA_OK:
+                    Toast.makeText(getBaseContext(), "Successful data downloading!", Toast.LENGTH_SHORT).show();
+                    refreshListview();
+                    break;
+
+            }
+            return false;
+        }
+    });
 
     private String getFaultCodeDescription(String code)   {
         String codeDesc = faultCodesMap.get(code);
@@ -139,21 +218,18 @@ public class FaultCodesActivity extends AppCompatActivity {
 
 
     public void LoadText(int resourceId) {
-        // The InputStream opens the resourceId and sends it to the buffer
         InputStream is = this.getResources().openRawResource(resourceId);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String readLine = null;
         faultCodesMap = new HashMap<String, String>();
 
         try {
-            // While the BufferedReader readLine is not null
             while ((readLine = br.readLine()) != null) {
                 String[] splits = readLine.split(" ", 2);
                 faultCodesMap.put(splits[0], splits[1]);
                 Log.d("TEXT", readLine);
             }
 
-            // Close the InputStream and BufferedReader
             is.close();
             br.close();
 
@@ -166,8 +242,94 @@ public class FaultCodesActivity extends AppCompatActivity {
         String[] fragments = faulCodesInString.split("\n");
         for (String s: fragments)
             faultCodes.add(s);
-        adapter.notifyDataSetChanged();
-        listView.invalidateViews();
+    }
+
+
+    private class ClearTroubleCodesTask extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            //TODO
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String result = "";
+
+            synchronized (this) {
+                final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+                device = btAdapter.getRemoteDevice(Connection.deviceAddress);
+                btAdapter.cancelDiscovery();
+                socket = null;
+
+                try {
+                    socket = device.createInsecureRfcommSocketToServiceRecord(uuid);
+                    socket.connect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    new ObdResetCommand().run(socket.getInputStream(), socket.getOutputStream());
+                    new EchoOffCommand().run(socket.getInputStream(), socket.getOutputStream());
+                    new LineFeedOffCommand().run(socket.getInputStream(), socket.getOutputStream());
+                    new SelectProtocolCommand(ObdProtocols.AUTO).run(socket.getInputStream(), socket.getOutputStream());
+                    ResetTroubleCodesCommand clear = new ResetTroubleCodesCommand();
+                    clear.run(socket.getInputStream(), socket.getOutputStream());
+                    String resultClear = clear.getFormattedResult();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_IO).sendToTarget();
+                    return null;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_IE).sendToTarget();
+                    return null;
+                } catch (UnableToConnectException e) {
+                    e.printStackTrace();
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_UTC).sendToTarget();
+                    return null;
+                } catch (MisunderstoodCommandException e) {
+                    e.printStackTrace();
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_MIS).sendToTarget();
+                    return null;
+                } catch (NoDataException e) {
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_NODATA).sendToTarget();
+                    return null;
+                } catch (Exception e) {
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
+                } finally {
+                    closeSocket(socket);
+                }
+
+            }
+
+            return result;
+        }
+
+        public void closeSocket(BluetoothSocket sock) {
+            if (sock != null)
+                try {
+                    sock.close();
+                } catch (IOException e) {}
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null && !result.equals("")){
+                faultCodesInString = result;
+                mHandler.obtainMessage(DATA_OK).sendToTarget();
+                setContentView(R.layout.activity_fault_codes);
+            }
+            else    {
+                clearListview();
+            }
+        }
     }
 
     private class GetTroubleCodesTask extends AsyncTask<String, Integer, String> {
@@ -181,22 +343,10 @@ public class FaultCodesActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             String result = "";
 
-            //Get the current thread's token
             synchronized (this) {
-                //Log.d(TAG, "Starting service..");
-                // get the remote Bluetooth device
-
                 final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
                 device = btAdapter.getRemoteDevice(Connection.deviceAddress);
-
-                //Log.d(TAG, "Stopping Bluetooth discovery.");
                 btAdapter.cancelDiscovery();
-
-                //Log.d(TAG, "Starting OBD connection..");
-
-                // Instantiate a BluetoothSocket for the remote device and connect it.
-                UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
                 socket = null;
 
                 try {
@@ -207,64 +357,36 @@ public class FaultCodesActivity extends AppCompatActivity {
                 }
 
                 try {
-                    // Let's configure the connection.
-                    //Log.d(TAG, "Queueing jobs for connection configuration..");
-
-                    //onProgressUpdate(1);
-
                     new ObdResetCommand().run(socket.getInputStream(), socket.getOutputStream());
-
-
-                    //onProgressUpdate(2);
-
                     new EchoOffCommand().run(socket.getInputStream(), socket.getOutputStream());
-
-                    //onProgressUpdate(3);
-
                     new LineFeedOffCommand().run(socket.getInputStream(), socket.getOutputStream());
-
-                    //onProgressUpdate(4);
-
                     new SelectProtocolCommand(ObdProtocols.AUTO).run(socket.getInputStream(), socket.getOutputStream());
-
-                    //onProgressUpdate(5);
 
                     ModifiedTroubleCodesObdCommand tcoc = new ModifiedTroubleCodesObdCommand();
                     tcoc.run(socket.getInputStream(), socket.getOutputStream());
                     result = tcoc.getFormattedResult();
-
-                    //onProgressUpdate(6);
-
                 } catch (IOException e) {
                     e.printStackTrace();
-                    //Log.e("DTCERR", e.getMessage());
-                    //mHandler.obtainMessage(OBD_COMMAND_FAILURE_IO).sendToTarget();
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_IO).sendToTarget();
                     return null;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                    //Log.e("DTCERR", e.getMessage());
-                    //mHandler.obtainMessage(OBD_COMMAND_FAILURE_IE).sendToTarget();
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_IE).sendToTarget();
                     return null;
                 } catch (UnableToConnectException e) {
                     e.printStackTrace();
-                    //Log.e("DTCERR", e.getMessage());
-                    //mHandler.obtainMessage(OBD_COMMAND_FAILURE_UTC).sendToTarget();
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_UTC).sendToTarget();
                     return null;
                 } catch (MisunderstoodCommandException e) {
                     e.printStackTrace();
-                    //Log.e("DTCERR", e.getMessage());
-                    //mHandler.obtainMessage(OBD_COMMAND_FAILURE_MIS).sendToTarget();
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_MIS).sendToTarget();
                     return null;
                 } catch (NoDataException e) {
-                    //Log.e("DTCERR", e.getMessage());
-                    //mHandler.obtainMessage(OBD_COMMAND_FAILURE_NODATA).sendToTarget();
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_NODATA).sendToTarget();
                     return null;
                 } catch (Exception e) {
-                    //Log.e("DTCERR", e.getMessage());
-                    //mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
                 } finally {
-
-                    // close socket
                     closeSocket(socket);
                 }
 
@@ -275,34 +397,32 @@ public class FaultCodesActivity extends AppCompatActivity {
 
         public void closeSocket(BluetoothSocket sock) {
             if (sock != null)
-                // close socket
                 try {
                     sock.close();
-                } catch (IOException e) {
-                    //Log.e(TAG, e.getMessage());
-                }
+                } catch (IOException e) {}
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            //progressDialog.setProgress(values[0]);
         }
 
         @Override
         protected void onPostExecute(String result) {
-            //progressDialog.dismiss();
-            //mHandler.obtainMessage(DATA_OK, result).sendToTarget();
-            faultCodesInString = result;
-            setContentView(R.layout.activity_fault_codes);
-            convertFaultCodesFromStringToList(result);
+            if (result != null && !result.equals("")){
+                faultCodesInString = result;
+                mHandler.obtainMessage(DATA_OK).sendToTarget();
+                setContentView(R.layout.activity_fault_codes);
+            }
+            else    {
+                clearListview();
+            }
         }
     }
 
     public class ModifiedTroubleCodesObdCommand extends TroubleCodesCommand {
         @Override
         public String getResult() {
-            // remove unwanted response from output since this results in erroneous error codes
             return rawData.replace("SEARCHING...", "").replace("NODATA", "");
         }
     }

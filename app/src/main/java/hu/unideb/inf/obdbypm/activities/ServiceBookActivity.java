@@ -69,11 +69,7 @@ public class ServiceBookActivity extends AppCompatActivity {
             startActivity(i);
             return true;
         }
-        else if (item.getItemId() == android.R.id.home){
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
-            return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
