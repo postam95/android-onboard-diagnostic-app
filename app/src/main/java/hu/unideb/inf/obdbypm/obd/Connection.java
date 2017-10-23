@@ -18,6 +18,7 @@ import com.github.pires.obd.enums.ObdProtocols;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Set;
 import java.util.UUID;
 

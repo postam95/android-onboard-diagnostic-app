@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.github.pires.obd.commands.control.TroubleCodesCommand;
@@ -39,6 +40,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Observable;
 import java.util.UUID;
 
 import hu.unideb.inf.obdbypm.MainActivity;
@@ -56,6 +58,7 @@ public class FaultCodesActivity extends AppCompatActivity {
     private GetTroubleCodesTask gtct;
     private ClearTroubleCodesTask ctct;
     private String faultCodesInString = null;
+    private ProgressBar progressBar;
     private static final UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final int NO_BLUETOOTH_DEVICE_SELECTED = 0;
     private static final int CANNOT_CONNECT_TO_DEVICE = 1;
@@ -74,6 +77,8 @@ public class FaultCodesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fault_codes);
 
+        progressBar = (ProgressBar) findViewById(R.id.activityIndicator);
+
         if (faultCodesMap == null)
             LoadText(R.raw.fault_codes);
 
@@ -83,7 +88,7 @@ public class FaultCodesActivity extends AppCompatActivity {
     }
 
     private void refreshListview()  {
-        faultCodes = new ArrayList<String>();
+        faultCodes = new ArrayList<>();
         convertFaultCodesFromStringToList(faultCodesInString);
         listView = (ListView) findViewById(R.id.list);
 
@@ -178,15 +183,17 @@ public class FaultCodesActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Error! Problem occurred during the connection!", Toast.LENGTH_SHORT).show();
                     break;
                 case OBD_COMMAND_FAILURE:
+                    Toast.makeText(getBaseContext(), "Error! Problem occurred during the communication! Maybe some fault codes are still active!", Toast.LENGTH_SHORT).show();
+                    break;
                 case OBD_COMMAND_FAILURE_IO:
                 case OBD_COMMAND_FAILURE_IE:
                 case OBD_COMMAND_FAILURE_MIS:
                 case OBD_COMMAND_FAILURE_UTC:
-                case OBD_COMMAND_FAILURE_NODATA:
                     Toast.makeText(getBaseContext(), "Error! Problem occurred during the communication!", Toast.LENGTH_SHORT).show();
                     break;
+                case OBD_COMMAND_FAILURE_NODATA:
                 case NO_DATA:
-                    Toast.makeText(getBaseContext(), "Error! No data!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "No fault codes found!", Toast.LENGTH_SHORT).show();
                     break;
                 case DATA_OK:
                     Toast.makeText(getBaseContext(), "Successful data downloading!", Toast.LENGTH_SHORT).show();
@@ -194,7 +201,7 @@ public class FaultCodesActivity extends AppCompatActivity {
                     break;
 
             }
-            return false;
+            return true;
         }
     });
 
@@ -249,7 +256,6 @@ public class FaultCodesActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            //TODO
         }
 
         @Override
@@ -274,6 +280,7 @@ public class FaultCodesActivity extends AppCompatActivity {
                     new EchoOffCommand().run(socket.getInputStream(), socket.getOutputStream());
                     new LineFeedOffCommand().run(socket.getInputStream(), socket.getOutputStream());
                     new SelectProtocolCommand(ObdProtocols.AUTO).run(socket.getInputStream(), socket.getOutputStream());
+
                     ResetTroubleCodesCommand clear = new ResetTroubleCodesCommand();
                     clear.run(socket.getInputStream(), socket.getOutputStream());
                     String resultClear = clear.getFormattedResult();
@@ -324,11 +331,11 @@ public class FaultCodesActivity extends AppCompatActivity {
             if (result != null && !result.equals("")){
                 faultCodesInString = result;
                 mHandler.obtainMessage(DATA_OK).sendToTarget();
-                setContentView(R.layout.activity_fault_codes);
             }
             else    {
                 clearListview();
             }
+            setContentView(R.layout.activity_fault_codes);
         }
     }
 
@@ -336,7 +343,6 @@ public class FaultCodesActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            //TODO
         }
 
         @Override
@@ -412,11 +418,11 @@ public class FaultCodesActivity extends AppCompatActivity {
             if (result != null && !result.equals("")){
                 faultCodesInString = result;
                 mHandler.obtainMessage(DATA_OK).sendToTarget();
-                setContentView(R.layout.activity_fault_codes);
             }
             else    {
                 clearListview();
             }
+            setContentView(R.layout.activity_fault_codes);
         }
     }
 
