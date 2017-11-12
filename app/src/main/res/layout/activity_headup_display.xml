@@ -19,30 +19,28 @@
         android:layout_height="match_parent"
         android:gravity="right|center_vertical"
         android:keepScreenOn="true"
-        android:text="56°C oil"
-        android:textColor="#33b5e5"
+        android:text="No data"        android:textColor="#33b5e5"
         android:textSize="30sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/dateAndTime"
+        android:id="@+id/consumption"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top|center_horizontal"
         android:keepScreenOn="true"
-        android:text="2017.10.15. 10.00"
+        android:text="No data"
         android:textColor="#33b5e5"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/speed"
+        android:id="@+id/currentSpeed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center|center_horizontal"
         android:keepScreenOn="true"
-        android:text="50 km/h"
-        android:textColor="#33b5e5"
+        android:text="No data"        android:textColor="#33b5e5"
         android:textSize="50sp"
         android:textStyle="bold" />
 
@@ -52,8 +50,7 @@
         android:layout_height="match_parent"
         android:gravity="bottom|center_horizontal"
         android:keepScreenOn="true"
-        android:text="5000 r.p.m."
-        android:textColor="#33b5e5"
+        android:text="No data"        android:textColor="#33b5e5"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -63,8 +60,7 @@
         android:layout_height="match_parent"
         android:gravity="left|center_vertical"
         android:keepScreenOn="true"
-        android:text="56% fuel"
-        android:textColor="#33b5e5"
+        android:text="No data"        android:textColor="#33b5e5"
         android:textSize="30sp"
         android:textStyle="bold" />
 </RelativeLayout>

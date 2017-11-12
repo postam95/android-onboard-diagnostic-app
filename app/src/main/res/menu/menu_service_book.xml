@@ -3,12 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/addService"
+        android:title="Add service" />
+    <item
         android:id="@+id/addCar"
-        app:showAsAction="never"
         android:title="Add car"  />
 
-    <item
-        android:id="@+id/addService"
-        app:showAsAction="never"
-        android:title="Add service" />
 </menu>

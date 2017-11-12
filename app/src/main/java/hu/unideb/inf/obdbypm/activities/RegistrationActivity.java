@@ -7,12 +7,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Date;
 import java.util.List;
 
-import hu.unideb.inf.obdbypm.MainActivity;
 import hu.unideb.inf.obdbypm.R;
-import hu.unideb.inf.obdbypm.database.DatabaseHelper;
 import hu.unideb.inf.obdbypm.database.DatabaseManager;
 import hu.unideb.inf.obdbypm.models.Person;
 

@@ -13,7 +13,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.unideb.inf.obdbypm.MainActivity;
 import hu.unideb.inf.obdbypm.R;
 import hu.unideb.inf.obdbypm.adapters.ExpandableListAdapter;
 import hu.unideb.inf.obdbypm.database.DatabaseManager;

@@ -4,16 +4,13 @@
 
     <item
         android:id="@+id/getFaultCodes"
-        app:showAsAction="never"
         android:title="Get fault codes"  />
 
     <item
         android:id="@+id/clearFaultCodes"
-        app:showAsAction="never"
         android:title="Clear fault codes" />
 
     <item
         android:id="@+id/chooseBluetooth"
-        app:showAsAction="never"
-        android:title="Choose OBDII device" />
+        android:title="Choose OBD-II device" />
 </menu>

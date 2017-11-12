@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="hu.unideb.inf.obdbypm.MainActivity">
+    tools:context="hu.unideb.inf.obdbypm.activities.MainActivity">
 
 
     <TextView
@@ -202,19 +202,5 @@
         android:layout_marginEnd="8dp"
         android:src="@drawable/login_image"
         />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:onClick="onClickNavigateToBluetoothChooseBtn"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="441dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>

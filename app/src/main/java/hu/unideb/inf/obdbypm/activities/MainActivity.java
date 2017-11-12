@@ -1,4 +1,4 @@
-package hu.unideb.inf.obdbypm;
+package hu.unideb.inf.obdbypm.activities;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -11,6 +11,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,12 +21,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import hu.unideb.inf.obdbypm.R;
 import hu.unideb.inf.obdbypm.activities.FaultCodesActivity;
 import hu.unideb.inf.obdbypm.activities.LiveDataActivity;
 import hu.unideb.inf.obdbypm.activities.HeadupDisplayActivity;
@@ -33,6 +38,7 @@ import hu.unideb.inf.obdbypm.activities.ServiceBookActivity;
 import hu.unideb.inf.obdbypm.database.DatabaseManager;
 import hu.unideb.inf.obdbypm.models.Car;
 import hu.unideb.inf.obdbypm.models.Person;
+import hu.unideb.inf.obdbypm.obd.Connection;
 import hu.unideb.inf.obdbypm.statics.Common;
 
 import static hu.unideb.inf.obdbypm.obd.Connection.deviceAddress;
@@ -40,7 +46,7 @@ import static hu.unideb.inf.obdbypm.obd.Connection.showAndGetPairedBluetoothDevi
 import static hu.unideb.inf.obdbypm.obd.Connection.turnOffBluetooth;
 import static hu.unideb.inf.obdbypm.obd.Connection.turnOnBluetooth;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends RxAppCompatActivity {
     private ImageButton loginButton;
     private TextView welcomeMessage;
     private TextView tvEmail;
@@ -74,6 +80,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         //SECOND
         super.onStart();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.chooseBluetooth) {
+            Connection.showAndGetPairedBluetoothDevices(this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
